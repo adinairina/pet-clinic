@@ -81,7 +81,7 @@ public class Veterinarian {
     @Override
     public String toString() {
         return "Veterinarian{" +
-                "veteranianId=" + veterinarianId +
+                "veterinarianId=" + veterinarianId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", address='" + address + '\'' +

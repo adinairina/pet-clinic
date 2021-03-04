@@ -72,7 +72,7 @@ public class Consult {
     @Override
     public String toString() {
         return "Consult{" +
-                "condultId=" + consultId +
+                "consultId=" + consultId +
                 ", date='" + date + '\'' +
                 ", description='" + description + '\'' +
                 ", veterinarian=" + veterinarian +

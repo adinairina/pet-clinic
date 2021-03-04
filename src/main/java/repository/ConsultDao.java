@@ -10,13 +10,15 @@ import util.HibernateUtil;
 public class ConsultDao {
 
     public Consult findByConsultId(Long id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try {
-            Session session = HibernateUtil.getSessionFactory().openSession();
             Consult consult = session.find(Consult.class, id);
             return consult;
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;
+        } finally {
+            session.close();
         }
     }
 

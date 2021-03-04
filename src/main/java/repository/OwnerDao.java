@@ -1,31 +1,51 @@
 package repository;
-import model.Pet;
 
+
+import model.Owner;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import util.HibernateUtil;
 
+import java.util.List;
 
-public class PetDao {
-    public Pet findByIdPet(Long id) {
+public class OwnerDao {
+
+    public Owner findByIdOwner(Long id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
-            Pet Pet = session.find(Pet.class, id);
-            return Pet;
+            Owner owner = session.find(Owner.class, id);
+            return owner;
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;
-        }finally {    //in plus (aparea o eroare)
+        } finally {
             session.close();
         }
     }
 
-    public static void createPet(Pet pet) {
+    public void createOwner(Owner owner) {
         Transaction transaction = null;
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            session.save(pet);
+            session.save(owner);
+            transaction.commit();
+        } catch (Exception ex) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            ex.printStackTrace();
+        }
+
+    }
+
+    public void deleteOwner(Owner owner) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.delete(owner);
             transaction.commit();
         } catch (Exception ex) {
             if (transaction != null) {
@@ -35,12 +55,12 @@ public class PetDao {
         }
     }
 
-    public void deletePet(Pet pet) {
+    public void updateOwner(Owner owner) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
         try {
-            Session session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            session.delete(pet);
+            session.update(owner);
             transaction.commit();
         } catch (Exception ex) {
             if (transaction != null) {
@@ -50,18 +70,18 @@ public class PetDao {
         }
     }
 
-    public void updatePet(Pet pet) {
-        Transaction transaction = null;
+    public List<Owner> findByNameOwner(String firstName) {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
-            transaction = session.beginTransaction();
-            session.update(pet);
-            transaction.commit();
+            Query query = session.createQuery("from Owner where firstName=:firstName", Owner.class);
+            query.setParameter("firstName", firstName);
+
+            List<Owner> ownerList = query.list();
+
+            return ownerList;
         } catch (Exception ex) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
             ex.printStackTrace();
+            return null;
         }
     }
 }

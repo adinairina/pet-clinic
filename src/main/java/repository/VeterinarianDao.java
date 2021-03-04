@@ -10,6 +10,7 @@ import java.util.List;
 
 
 public class VeterinarianDao {
+
     public  Veterinarian findByIdVeterinarian(Long id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
@@ -25,11 +26,12 @@ public class VeterinarianDao {
     public List<Veterinarian> findByNameVet(String firstName) {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from Veterinarian where firstName:=firstName", Veterinarian.class);
-        query.setParameter("firstName", firstName);
-            List<Veterinarian> veterinarians = query.list();
-            return veterinarians;
+            Query query = session.createQuery("from Veterinarian where firstName=:firstName", Veterinarian.class);
+            query.setParameter("firstName", firstName);
 
+            List<Veterinarian> veterinarianList = query.list();
+
+            return veterinarianList;
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;
@@ -42,7 +44,7 @@ public class VeterinarianDao {
             transaction = session.beginTransaction();
             session.save(veterinarian);
             transaction.commit();
-            System.out.println("veterinarian creat");
+            System.out.println("Veterinarian created!");
         } catch (Exception ex) {
             if (transaction != null) {
                 transaction.rollback();

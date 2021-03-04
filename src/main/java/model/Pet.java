@@ -15,7 +15,7 @@ public class Pet {
     @Column(name = "race")
     private String race;
 
-    @Column(name = "birthDate")
+    @Column(name = "birth_date")
     private String birthDate;
 
     @Column(name = "is_vaccinated")
@@ -26,6 +26,11 @@ public class Pet {
 
     @OneToMany(mappedBy = "pet")
     private List<Consult> consults;
+
+
+//   @ManyToOne
+//   @JoinColumn(name = "owner_id")
+//   private Owner owner;
 
     public Pet() {
     }

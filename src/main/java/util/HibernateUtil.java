@@ -2,6 +2,7 @@ package util;
 
 
 import model.Consult;
+import model.Owner;
 import model.Pet;
 import model.Veterinarian;
 import org.hibernate.SessionFactory;
@@ -39,6 +40,7 @@ public class HibernateUtil {
                 configuration.addAnnotatedClass(Consult.class);
                 configuration.addAnnotatedClass(Pet.class);   //legatura cu baza de date
                 configuration.addAnnotatedClass(Veterinarian.class);
+                //configuration.addAnnotatedClass(Owner.class);
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();
                 sessionFactory = configuration.buildSessionFactory(serviceRegistry);
